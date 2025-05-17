@@ -16,16 +16,6 @@ A full-stack AI-powered application that explains files (code, configs, and text
 
 ---
 
-## 📸 Screenshot
-
-> Save your screenshot in a folder like `screenshots/` and reference the image path.
-
-### 🧠 Frontend UI
-
-![Frontend UI](screenshots/frontend-ui.png)
-
----
-
 ## 🧰 Requirements
 
 - Python 3.9+
