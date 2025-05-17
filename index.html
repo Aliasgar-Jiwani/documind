@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documind</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="particles-js"></div>
+    <button
+      class="theme-toggle"
+      id="theme-toggle"
+      aria-label="Toggle dark mode"
+    >
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container">
+      <header>
+        <div class="logo">
+          <i class="fas fa-brain logo-icon"></i>
+        </div>
+        <h1>Documind</h1>
+        <p class="description">
+          Upload a file or paste content to get an AI-powered explanation using
+          TinyLLaMA. Perfect for understanding code, configuration files, and
+          documentation.
+        </p>
+      </header>
+
+      <div class="app-container">
+        <div class="card input-section">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-file-code"></i>
+              Input
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="file-type">File Type:</label>
+              <select id="file-type">
+                <option value="python">Python (.py)</option>
+                <option value="javascript">JavaScript (.js)</option>
+                <option value="html">HTML (.html)</option>
+                <option value="css">CSS (.css)</option>
+                <option value="json">JSON (.json)</option>
+                <option value="yaml">YAML (.yaml/.yml)</option>
+                <option value="markdown">Markdown (.md)</option>
+                <option value="text">Plain Text (.txt)</option>
+                <option value="bash">Bash/Shell (.sh)</option>
+                <option value="configuration">Configuration File</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="tab-buttons">
+              <button id="upload-tab-btn" class="tab-button active">
+                <i class="fas fa-upload"></i>
+                Upload File
+              </button>
+              <button id="paste-tab-btn" class="tab-button">
+                <i class="fas fa-paste"></i>
+                Paste Content
+              </button>
+            </div>
+
+            <div id="upload-tab" class="tab-content active">
+              <div class="file-input">
+                <div id="file-drop" class="file-drop">
+                  <i class="fas fa-cloud-upload-alt float"></i>
+                  <p>Drag & drop file here or click to browse</p>
+                  <small>Maximum file size: 5MB</small>
+                  <input type="file" id="file-upload" style="display: none" />
+                </div>
+                <div id="file-info" class="file-info">
+                  <div class="file-info-header">
+                    <h4>Selected File</h4>
+                    <button
+                      id="file-remove"
+                      class="file-remove"
+                      aria-label="Remove file"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                  <div class="file-details">
+                    <div
+                      id="file-type-icon"
+                      class="file-type-icon file-type-other"
+                    >
+                      <i class="fas fa-file"></i>
+                    </div>
+                    <div class="file-meta">
+                      <div id="file-name" class="file-name">filename.txt</div>
+                      <div id="file-size" class="file-size">0 KB</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="paste-tab" class="tab-content">
+              <div class="form-group">
+                <label for="file-content">File Content:</label>
+                <textarea
+                  id="file-content"
+                  rows="10"
+                  placeholder="Paste file content here..."
+                ></textarea>
+              </div>
+            </div>
+
+            <button id="explain-btn" class="button" disabled>
+              <i class="fas fa-magic"></i>
+              Explain with TinyLLaMA
+            </button>
+          </div>
+        </div>
+
+        <div class="card output-section">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-lightbulb"></i>
+              AI Explanation
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="loading" id="loading">
+              <div class="loading-spinner"></div>
+              <p class="loading-text">Processing with TinyLLaMA...</p>
+              <div class="loading-progress">
+                <div class="loading-progress-bar" id="progress-bar"></div>
+              </div>
+            </div>
+            <div class="output-content" id="explanation-output">
+              <div
+                style="
+                  color: var(--secondary-color);
+                  text-align: center;
+                  margin-top: 2rem;
+                "
+              >
+                <i
+                  class="fas fa-arrow-left"
+                  style="font-size: 2rem; margin-bottom: 1rem"
+                ></i>
+                <p>
+                  No content to explain yet. Upload a file or paste content,
+                  then click "Explain with TinyLLaMA".
+                </p>
+              </div>
+            </div>
+            <div class="output-actions">
+              <button
+                id="copy-btn"
+                class="action-button tooltip"
+                data-tooltip="Copy to clipboard"
+                aria-label="Copy to clipboard"
+              >
+                <i class="fas fa-copy"></i>
+              </button>
+              <button
+                id="download-btn"
+                class="action-button tooltip"
+                data-tooltip="Download explanation"
+                aria-label="Download explanation"
+              >
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+            <div class="status" id="status" style="display: none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-logo">
+          <i class="fas fa-brain"></i>
+          <span>TinyLLaMA</span>
+        </div>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Documentation</a>
+          <a href="#" class="footer-link">GitHub</a>
+          <a href="#" class="footer-link">API Reference</a>
+          <a href="#" class="footer-link">Support</a>
+        </div>
+        <p>Powered by TinyLLaMA and Ollama | &copy; 2025</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
