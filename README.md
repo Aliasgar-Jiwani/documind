@@ -22,7 +22,7 @@ A full-stack AI-powered application that explains files (code, configs, and text
 
 ### 🧠 Frontend UI
 
-![Frontend UI](screenshots/frontend-ui.png)
+![Frontend UI](https://raw.githubusercontent.com/Aliasgar-Jiwani/documind/main/screenshots/frontend-ui.png)
 
 ---
 
